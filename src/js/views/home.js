@@ -41,7 +41,36 @@ export const Home = () => {
 		  })
 		  .then(data => {
 			  // Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-			  setContacts(data.contacts); // 
+			  setContacts(data.contacts);
+			  console.log(data.contacts) // 
+		  })
+		  .catch(error => {
+			  // Manejo de errores
+			  console.log(error);
+		  });
+	}
+	const addTodo = () => {
+		fetch(`https://playground.4geeks.com/contact/agendas/MaxiRomero/contacts`, {
+			method: "POST",
+			body: JSON.stringify(
+				{
+					"name": name,
+					"phone": phone,
+					"email": email,
+					"address": address,
+				  }
+			),
+			headers: {
+			  "Content-Type": "application/json"
+			}
+		  })
+		  .then(resp => {
+			  return resp.json(); // Intentará parsear el resultado a JSON y retornará una promesa donde puedes usar .then para seguir con la lógica
+		  })
+		  .then(data => {
+			  // Aquí es donde debe comenzar tu código después de que finalice la búsqueda
+			  
+			  console.log(data.contacts) // 
 		  })
 		  .catch(error => {
 			  // Manejo de errores
@@ -51,10 +80,11 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			<div>
-				<input value={name} onChange = {(e)=>setName(e.target.value)}/>
-				<input value={phone} onChange = {(e)=>setPhone(e.target.value)}/>
-				<input value={email} onChange = {(e)=>setEmail(e.target.value)}/>
-				<input value={address} onChange = {(e)=>setAddress(e.target.value)}/>
+				<input placeholder="Nombre" value={name} onChange = {(e)=>setName(e.target.value)}/>
+				<input placeholder="Telefono" value={phone} onChange = {(e)=>setPhone(e.target.value)}/>
+				<input placeholder="Email" value={email} onChange = {(e)=>setEmail(e.target.value)}/>
+				<input placeholder="Direccion" value={address} onChange = {(e)=>setAddress(e.target.value)}/>
+				<button onClick={addTodo}>AGREGAR</button>
 			</div>
 		{contacts.map(contact=>(
 			<div>
